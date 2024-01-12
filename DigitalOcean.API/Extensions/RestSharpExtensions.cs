@@ -29,7 +29,8 @@ namespace DigitalOcean.API.Extensions {
 
         private static RestResponse ThrowIfException(this RestResponse response) {
             if (response.ErrorException != null) {
-                throw new Exception("There was an an exception thrown during the request.",
+                throw new Exception("There was an an exception thrown during the request. " +
+                                    $"Resource: {response.Request.Resource}. Status: {response.StatusCode}. Body: {response.Content}",
                     response.ErrorException);
             }
 
@@ -50,8 +51,15 @@ namespace DigitalOcean.API.Extensions {
 
         public static T Deserialize<T>(this RestResponse response) {
             response.Request.OnBeforeDeserialization(response);
-            var parsedJson = (JObject)JsonConvert.DeserializeObject(response.Content);
-            return JsonDeserializationHelper.DeserializeWithRootElementName<T>(parsedJson, response.Request.RootElement);
+            try {
+                var parsedJson = (JObject)JsonConvert.DeserializeObject(response.Content);
+                return JsonDeserializationHelper.DeserializeWithRootElementName<T>(parsedJson, response.Request.RootElement);
+            }
+            catch (Exception ex) {
+                throw new Exception($"Failed deserializing response. " +
+                                    $"Resource: {response.Request.Resource}. Status: {response.StatusCode}. Body: {response.Content}",
+                    ex);
+            }
         }
     }
 }
