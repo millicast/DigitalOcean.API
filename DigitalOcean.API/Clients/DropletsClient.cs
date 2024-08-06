@@ -131,6 +131,34 @@ namespace DigitalOcean.API.Clients {
             return _connection.ExecuteRaw("droplets", parameters, null, Method.Delete);
         }
 
+        public Task<DestroyResources> GetDestroyResources(long dropletId) {
+            var parameters = new List<Parameter> {
+                new UrlSegmentParameter ("droplet_id", dropletId.ToString())
+            };
+            return _connection.ExecuteRequest<DestroyResources>("droplets/{droplet_id}/destroy_with_associated_resources", parameters);
+        }
+
+        public Task Destroy(long dropletId, Models.Requests.DestroyResources resources) {
+            var parameters = new List<Parameter> {
+                new UrlSegmentParameter ("droplet_id", dropletId.ToString())
+            };
+            return _connection.ExecuteRaw("droplets/{droplet_id}/destroy_with_associated_resources/selective", parameters, resources, Method.Delete);
+        }
+
+        public Task<DestroyStatus> GetDestroyStatus(long dropletId) {
+            var parameters = new List<Parameter> {
+                new UrlSegmentParameter ("droplet_id", dropletId.ToString())
+            };
+            return _connection.ExecuteRequest<DestroyStatus>("droplets/{droplet_id}/destroy_with_associated_resources/status", parameters);
+        }
+
+        public Task RetryDestroy(long dropletId) {
+            var parameters = new List<Parameter> {
+                new UrlSegmentParameter ("droplet_id", dropletId.ToString())
+            };
+            return _connection.ExecuteRaw("droplets/{droplet_id}/destroy_with_associated_resources/retry", parameters, method: Method.Post);
+        }
+
         /// <summary>
         /// To retrieve a list of any Droplets that are running on the same physical hardware.
         /// </summary>
