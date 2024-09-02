@@ -65,14 +65,14 @@ namespace DigitalOcean.API.Http {
                 // some APIs seem to return the full URL in paginated links (or there is some code populating this?
                 // but others (notably /v2/volumes) returns only the relative URL
                 // maybe this was a bug introduced by DO? or it has always been this way, unknown
-                var absoluteIndex = endpoint.IndexOf(DigitalOceanClient.DigitalOceanApiUrl, StringComparison.Ordinal);
+                var absoluteIndex = page.Pages.Next.IndexOf(DigitalOceanClient.DigitalOceanApiUrl, StringComparison.Ordinal);
                 if (absoluteIndex == 0) {
                     // standard replacement of full URL (only if matches from beginning of string)
                     endpoint = page.Pages.Next.Substring(DigitalOceanClient.DigitalOceanApiUrl.Length);
                 }
                 else {
                     // test if relative URL replacement, and only replace from beginning of string
-                    var relativeIndex = endpoint.IndexOf(DigitalOceanClient.RelativeUrl, StringComparison.Ordinal);
+                    var relativeIndex = page.Pages.Next.IndexOf(DigitalOceanClient.RelativeUrl, StringComparison.Ordinal);
                     if (relativeIndex == 0) {
                         endpoint = page.Pages.Next.Substring(DigitalOceanClient.RelativeUrl.Length);
                     }
