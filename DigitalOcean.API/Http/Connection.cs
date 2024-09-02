@@ -62,7 +62,26 @@ namespace DigitalOcean.API.Http {
             // loop until we are finished
             var allItems = new List<T>(data);
             while (page != null && page.Pages != null && !String.IsNullOrWhiteSpace(page.Pages.Next)) {
-                endpoint = page.Pages.Next.Replace(DigitalOceanClient.DigitalOceanApiUrl, "");
+                // some APIs seem to return the full URL in paginated links (or there is some code populating this?
+                // but others (notably /v2/volumes) returns only the relative URL
+                // maybe this was a bug introduced by DO? or it has always been this way, unknown
+                var absoluteIndex = endpoint.IndexOf(DigitalOceanClient.DigitalOceanApiUrl, StringComparison.Ordinal);
+                if (absoluteIndex == 0) {
+                    // standard replacement of full URL (only if matches from beginning of string)
+                    endpoint = page.Pages.Next.Substring(DigitalOceanClient.DigitalOceanApiUrl.Length);
+                }
+                else {
+                    // test if relative URL replacement, and only replace from beginning of string
+                    var relativeIndex = endpoint.IndexOf(DigitalOceanClient.RelativeUrl, StringComparison.Ordinal);
+                    if (relativeIndex == 0) {
+                        endpoint = page.Pages.Next.Substring(DigitalOceanClient.RelativeUrl.Length);
+                    }
+                    else {
+                        // likely will error, but nothing is match to replacement
+                        endpoint = page.Pages.Next;
+                    }
+                }
+
                 var iter = await ExecuteRaw(endpoint, null).ConfigureAwait(false);
 
                 parsedJson = (JObject)JsonConvert.DeserializeObject(iter.Content);
