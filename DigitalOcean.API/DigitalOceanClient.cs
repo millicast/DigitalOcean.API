@@ -5,7 +5,9 @@ using RestSharp.Serializers.NewtonsoftJson;
 
 namespace DigitalOcean.API {
     public class DigitalOceanClient : IDigitalOceanClient {
-        public static readonly string DigitalOceanApiUrl = "https://api.digitalocean.com/v2/";
+        // some APIs return only a relative URL of next paginated call
+        public const string RelativeUrl = "/v2/";
+        public const string DigitalOceanApiUrl = "https://api.digitalocean.com" + RelativeUrl;
         private readonly IConnection _connection;
 
         public DigitalOceanClient(string token) {
