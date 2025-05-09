@@ -67,6 +67,32 @@ namespace DigitalOcean.API.Clients {
         Task DeleteByTag(string tagName);
 
         /// <summary>
+        /// To list the associated billable resources that can be destroyed along with a Droplet.
+        /// The response will contain snapshots, volumes, and volume_snapshots keys.
+        /// Each will be set to an array of objects containing information about the associated resources.
+        /// </summary>
+        Task<DestroyResources> GetDestroyResources(long dropletId);
+
+        /// <summary>
+        /// To destroy a Droplet along with a sub-set of its associated resources.
+        /// The body of the request should include reserved_ips, snapshots, volumes, or volume_snapshots keys each set to an array of IDs for the associated resources to be destroyed.
+        /// The IDs can be found by querying the Droplet's associated resources. Any associated resource not included in the request will remain and continue to accrue changes on your account.
+        /// Use the status endpoint to check on the success or failure of the destruction of the individual resources.
+        /// </summary>
+        Task Destroy(long dropletId, Models.Requests.DestroyResources resources);
+
+        /// <summary>
+        /// To check on the status of a request to destroy a Droplet with its associated resources.
+        /// </summary>
+        Task<DestroyStatus> GetDestroyStatus(long dropletId);
+
+        /// <summary>
+        /// If the status of a request to destroy a Droplet with its associated resources reported any errors, it can be retried.
+        /// Only one destroy can be active at a time per Droplet.
+        /// </summary>
+        Task RetryDestroy(long dropletId);
+
+        /// <summary>
         /// To retrieve a list of any Droplets that are running on the same physical hardware.
         /// </summary>
         [System.Obsolete("Deprecated on December 17th, 2019")]
