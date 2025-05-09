@@ -1,0 +1,46 @@
+workflow: GitFlow/v1
+# base version
+next-version: 5.3.0
+branches:
+  release:
+    label: rc
+    source-branches:
+    - main
+
+  feature:
+    prevent-increment:
+      when-current-commit-tagged: true
+    source-branches:
+    - main
+    - develop
+    - release
+    - hotfix
+
+  develop:
+    # we use the branch name next
+    regex: ^next$
+
+  hotfix:
+    source-branches:
+    - main
+
+  unknown:
+    source-branches:
+    - main
+    - develop
+    - release
+    - feature
+    - pull-request
+    - hotfix
+
+  pull-request:
+    source-branches:
+    - main
+    - develop
+    - release
+    - feature
+    - hotfix
+
+  # disabling
+  support:
+    regex: ^$

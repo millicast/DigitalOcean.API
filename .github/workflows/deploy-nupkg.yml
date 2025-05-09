@@ -1,0 +1,11 @@
+name: deploy-nupkg
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  deploy:
+    uses: millicast/github-actions-internal/.github/workflows/build_nupkg.yml@IOPS-5066
+    secrets: inherit
