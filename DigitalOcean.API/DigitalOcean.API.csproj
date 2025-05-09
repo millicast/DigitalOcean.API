@@ -10,6 +10,7 @@
     <PackageIconUrl>http://i.imgur.com/llqIpX6.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageTags>DigitalOcean API</PackageTags>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/millicast/DigitalOcean.API</PackageProjectUrl>
