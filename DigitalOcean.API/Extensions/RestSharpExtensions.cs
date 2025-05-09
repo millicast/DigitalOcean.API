@@ -19,7 +19,6 @@ namespace DigitalOcean.API.Extensions {
 
         public static async Task<RestResponse> ExecuteTaskRaw(this IRestClient client, RestRequest request) {
             var ret = await GetResponseContentAsync(client, request);
-            request.OnBeforeDeserialization(ret);
             return ret.ThrowIfException();
         }
 
@@ -50,7 +49,6 @@ namespace DigitalOcean.API.Extensions {
         }
 
         public static T Deserialize<T>(this RestResponse response) {
-            response.Request.OnBeforeDeserialization(response);
             try {
                 var parsedJson = (JObject)JsonConvert.DeserializeObject(response.Content);
                 return JsonDeserializationHelper.DeserializeWithRootElementName<T>(parsedJson, response.Request.RootElement);
