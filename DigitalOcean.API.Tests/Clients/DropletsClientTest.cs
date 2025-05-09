@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DigitalOcean.API.Clients;
 using DigitalOcean.API.Http;
@@ -5,6 +6,7 @@ using DigitalOcean.API.Models.Responses;
 using NSubstitute;
 using RestSharp;
 using Xunit;
+using Action = DigitalOcean.API.Models.Responses.Action;
 
 namespace DigitalOcean.API.Tests.Clients {
     public class DropletsClientTest {
@@ -140,6 +142,7 @@ namespace DigitalOcean.API.Tests.Clients {
         }
 
         [Fact]
+        [Obsolete]
         public void CorrectRequestForListDropletNeighbors() {
             var factory = Substitute.For<IConnection>();
             var client = new DropletsClient(factory);

@@ -8,6 +8,7 @@ using DigitalOcean.API.Models.Responses;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Interceptors;
 
 namespace DigitalOcean.API.Http {
     public class Connection : IConnection {
@@ -96,7 +97,11 @@ namespace DigitalOcean.API.Http {
 
         private RestRequest BuildRequest(string endpoint, IEnumerable<Parameter> parameters) {
             var request = new RestRequest(endpoint) {
-                OnBeforeDeserialization = r => { Rates = new RateLimit(r.Headers); }
+                Interceptors = new List<Interceptor>() {
+                    new CompatibilityInterceptor() {
+                        OnBeforeDeserialization = r => { Rates = new RateLimit(r.Headers); }
+                    }
+                }
             };
 
             if (parameters == null) {
