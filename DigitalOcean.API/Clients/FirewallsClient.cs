@@ -17,7 +17,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task AddDroplets(string firewallId, Models.Requests.FirewallDroplets droplets) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("firewalls/{id}/droplets", parameters, droplets, Method.Post);
         }
@@ -27,7 +27,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task AddRules(string firewallId, Models.Requests.FirewallRules rules) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("firewalls/{id}/rules", parameters, rules, Method.Post);
         }
@@ -37,7 +37,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task AddTags(string firewallId, Models.Requests.FirewallTags tags) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("firewalls/{id}/tags", parameters, tags, Method.Post);
         }
@@ -54,7 +54,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(string firewallId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("firewalls/{id}", parameters, null, Method.Delete);
         }
@@ -64,7 +64,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Firewall> Get(string firewallId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Firewall>("firewalls/{id}", parameters, null, "firewall");
         }
@@ -81,7 +81,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task RemoveDroplets(string firewallId, Models.Requests.FirewallDroplets droplets) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("firewalls/{id}/droplets", parameters, droplets, Method.Delete);
         }
@@ -91,7 +91,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task RemoveRules(string firewallId, Models.Requests.FirewallRules rules) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("firewalls/{id}/rules", parameters, rules, Method.Delete);
         }
@@ -101,7 +101,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task RemoveTags(string firewallId, Models.Requests.FirewallTags tags) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("firewalls/{id}/tags", parameters, tags, Method.Delete);
         }
@@ -111,7 +111,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Firewall> Update(string firewallId, Models.Requests.Firewall firewall) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", firewallId)
+                Parameter.CreateParameter("id", firewallId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Firewall>("firewalls/{id}", parameters, firewall, "firewall", Method.Put);
         }

@@ -24,7 +24,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(string ipAddress) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("ip", ipAddress)
+                Parameter.CreateParameter("ip", ipAddress, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("floating_ips/{ip}", parameters, null, Method.Delete);
         }
@@ -34,7 +34,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<FloatingIp> Get(string ipAddress) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("ip", ipAddress)
+                Parameter.CreateParameter("ip", ipAddress, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<FloatingIp>("floating_ips/{ip}", parameters, null, "floating_ip");
         }

@@ -19,7 +19,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Action> Attach(string volumeId, long dropletId, string volumeRegion) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             var body = new Models.Requests.VolumeAction {
                 Type = "attach",
@@ -47,7 +47,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Action> Detach(string volumeId, long dropletId, string volumeRegion) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             var body = new Models.Requests.VolumeAction {
                 Type = "detach",
@@ -75,8 +75,8 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Action> GetAction(string volumeId, long actionId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", volumeId),
-                new UrlSegmentParameter("actionId", actionId.ToString())
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment),
+                Parameter.CreateParameter("actionId", actionId.ToString(), ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Action>("volumes/{id}/actions/{actionId}", parameters, null, "action");
         }
@@ -86,7 +86,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<IReadOnlyList<Action>> GetActions(string volumeId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             return _connection.GetPaginated<Action>("volumes/{id}/actions", parameters, "action");
         }
@@ -96,7 +96,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Action> Resize(string volumeId, int sizeGigabytes, string volumeRegion) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             var body = new Models.Requests.VolumeAction {
                 Type = "resize",

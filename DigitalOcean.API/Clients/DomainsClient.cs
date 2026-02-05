@@ -34,7 +34,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Domain> Get(string domainName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("name", domainName)
+                Parameter.CreateParameter("name", domainName, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Domain>("domains/{name}", parameters, null, "domain");
         }
@@ -44,7 +44,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(string domainName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("name", domainName)
+                Parameter.CreateParameter("name", domainName, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("domains/{name}", parameters, null, Method.Delete);
         }
