@@ -71,7 +71,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<IReadOnlyList<ContainerRegistryRepository>> GetAllRepositories(string registryName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName)
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment)
             };
 
             return _connection.GetPaginated<ContainerRegistryRepository>($"registry/{{{nameof(registryName)}}}/repositories", parameters, "repositories");
@@ -82,8 +82,8 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<IReadOnlyList<ContainerRegistryTag>> GetAllRepositoryTags(string registryName, string repositoryName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName),
-                new UrlSegmentParameter (nameof(repositoryName), repositoryName),
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment),
+                Parameter.CreateParameter(nameof(repositoryName), repositoryName, ParameterType.UrlSegment),
             };
 
             return _connection.GetPaginated<ContainerRegistryTag>($"registry/{{{nameof(registryName)}}}/repositories/{{{nameof(repositoryName)}}}/tags", parameters, "tags");
@@ -94,9 +94,9 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task DeleteRepositoryTag(string registryName, string repositoryName, string tag) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName),
-                new UrlSegmentParameter (nameof(repositoryName), repositoryName),
-                new UrlSegmentParameter (nameof(tag), tag),
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment),
+                Parameter.CreateParameter(nameof(repositoryName), repositoryName, ParameterType.UrlSegment),
+                Parameter.CreateParameter(nameof(tag), tag, ParameterType.UrlSegment),
             };
 
             return _connection.ExecuteRaw($"registry/{{{nameof(registryName)}}}/repositories/{{{nameof(repositoryName)}}}/tags/{{{nameof(tag)}}}", parameters, null, Method.Delete);
@@ -107,8 +107,8 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task DeleteRepositoryManifest(string registryName, string repositoryName, string manifestDigest) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName),
-                new UrlSegmentParameter (nameof(repositoryName), repositoryName),
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment),
+                Parameter.CreateParameter(nameof(repositoryName), repositoryName, ParameterType.UrlSegment),
             };
 
             return _connection.ExecuteRaw($"registry/{{{nameof(registryName)}}}/repositories/{{{nameof(repositoryName)}}}/digests/{manifestDigest}", parameters, null, Method.Delete);
@@ -119,7 +119,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<GarbageCollection> StartGarbageCollection(string registryName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName),
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment),
             };
 
             return _connection.ExecuteRequest<GarbageCollection>($"registry/{{{nameof(registryName)}}}/garbage-collection", parameters, null, "garbage_collections", Method.Post);
@@ -130,7 +130,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<GarbageCollection> GetActiveGarbageCollection(string registryName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName),
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment),
             };
 
             return _connection.ExecuteRequest<GarbageCollection>($"registry/{{{nameof(registryName)}}}/garbage-collection", parameters, null, "garbage_collections");
@@ -141,7 +141,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<IReadOnlyList<GarbageCollection>> GetAllGarbageCollections(string registryName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName),
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment),
             };
 
             return _connection.GetPaginated<GarbageCollection>($"registry/{{{nameof(registryName)}}}/garbage-collections", parameters, "garbage_collections");
@@ -152,8 +152,8 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<GarbageCollection> UpdateGarbageCollection(string registryName, string uuid, UpdateGarbageCollection updateGarbageCollection) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter (nameof(registryName), registryName),
-                new UrlSegmentParameter (nameof(uuid), uuid),
+                Parameter.CreateParameter(nameof(registryName), registryName, ParameterType.UrlSegment),
+                Parameter.CreateParameter(nameof(uuid), uuid, ParameterType.UrlSegment),
             };
 
             return _connection.ExecuteRequest<GarbageCollection>($"registry/{{{nameof(registryName)}}}/garbage-collection/{{{nameof(uuid)}}}", parameters, updateGarbageCollection, "garbage_collections", Method.Put);

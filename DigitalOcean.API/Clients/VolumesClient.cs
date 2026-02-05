@@ -26,7 +26,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Snapshot> CreateSnapshot(string volumeId, Models.Requests.VolumeSnapshot snapshot) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Snapshot>("volumes/{id}/snapshots", parameters, snapshot, "snapshot", Method.Post);
         }
@@ -36,7 +36,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(string volumeId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("volumes/{id}", parameters, null, Method.Delete);
         }
@@ -57,7 +57,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Volume> Get(string volumeId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Volume>("volumes/{id}", parameters, null, "volume");
         }
@@ -85,7 +85,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<IReadOnlyList<Snapshot>> GetSnapshots(string volumeId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", volumeId)
+                Parameter.CreateParameter("id", volumeId, ParameterType.UrlSegment)
             };
             return _connection.GetPaginated<Snapshot>("volumes/{id}/snapshots", parameters, "snapshots");
         }

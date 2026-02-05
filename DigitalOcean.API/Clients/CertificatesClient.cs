@@ -24,7 +24,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Certificate> Get(string certificateId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("certificate_id", certificateId)
+                Parameter.CreateParameter("certificate_id", certificateId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Certificate>("certificates/{certificate_id}", parameters, null, "certificate");
         }
@@ -47,7 +47,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(string certificateId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("certificate_id", certificateId)
+                Parameter.CreateParameter("certificate_id", certificateId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("certificates/{certificate_id}", parameters, null, Method.Delete);
         }

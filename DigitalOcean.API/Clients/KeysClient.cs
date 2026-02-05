@@ -33,7 +33,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Key> Get(object keyIdOrFingerprint) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("id", keyIdOrFingerprint.ToString())
+                Parameter.CreateParameter("id", keyIdOrFingerprint.ToString(), ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Key>("account/keys/{id}", parameters, null, "ssh_key");
         }
@@ -43,7 +43,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Key> Update(object keyIdOrFingerprint, Models.Requests.UpdateKey updateKey) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("id", keyIdOrFingerprint.ToString())
+                Parameter.CreateParameter("id", keyIdOrFingerprint.ToString(), ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Key>("account/keys/{id}", parameters, updateKey, "ssh_key", Method.Put);
         }
@@ -53,7 +53,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(object keyIdOrFingerprint) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id",keyIdOrFingerprint.ToString())
+                Parameter.CreateParameter("id", keyIdOrFingerprint.ToString(), ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("account/keys/{id}", parameters, null, Method.Delete);
         }

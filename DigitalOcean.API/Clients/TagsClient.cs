@@ -26,7 +26,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Tag> Get(string tagName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("name", tagName)
+                Parameter.CreateParameter("name", tagName, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Tag>("tags/{name}", parameters, null, "tag");
         }
@@ -47,7 +47,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Tag(string tagName, Models.Requests.TagResources resources) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("name", tagName)
+                Parameter.CreateParameter("name", tagName, ParameterType.UrlSegment)
             };
 
             return _connection.ExecuteRaw("tags/{name}/resources", parameters, resources, Method.Post);
@@ -58,7 +58,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Untag(string tagName, Models.Requests.TagResources resources) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("name", tagName)
+                Parameter.CreateParameter("name", tagName, ParameterType.UrlSegment)
             };
 
             return _connection.ExecuteRaw("tags/{name}/resources", parameters, resources, Method.Delete);
@@ -69,7 +69,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(string tagName) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("name", tagName)
+                Parameter.CreateParameter("name", tagName, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("tags/{name}", parameters, null, Method.Delete);
         }

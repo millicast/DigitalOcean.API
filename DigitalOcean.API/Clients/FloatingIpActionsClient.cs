@@ -17,7 +17,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Action> Assign(string ipAddress, long dropletId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("ip", ipAddress)
+                Parameter.CreateParameter("ip", ipAddress, ParameterType.UrlSegment)
             };
             var body = new Models.Requests.FloatingIpAction {
                 Type = "assign",
@@ -31,8 +31,8 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Action> GetAction(string ipAddress, long actionId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("ip", ipAddress),
-                new UrlSegmentParameter ("actionId", actionId.ToString())
+                Parameter.CreateParameter("ip", ipAddress, ParameterType.UrlSegment),
+                Parameter.CreateParameter("actionId", actionId.ToString(), ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Action>("floating_ips/{ip}/actions/{actionId}", parameters, null, "action");
         }
@@ -42,7 +42,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<IReadOnlyList<Action>> GetActions(string ipAddress) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("ip", ipAddress)
+                Parameter.CreateParameter("ip", ipAddress, ParameterType.UrlSegment)
             };
             return _connection.GetPaginated<Action>("floating_ips/{ip}/actions", parameters, "actions");
         }
@@ -52,7 +52,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Action> Unassign(string ipAddress) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("ip", ipAddress)
+                Parameter.CreateParameter("ip", ipAddress, ParameterType.UrlSegment)
             };
             var body = new Models.Requests.FloatingIpAction {
                 Type = "unassign"

@@ -32,7 +32,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Vpc> Get(string vpcId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("id", vpcId)
+                Parameter.CreateParameter("id", vpcId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Vpc>("vpcs/{id}", parameters, null, "vpc");
         }
@@ -45,7 +45,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task Delete(string vpcId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", vpcId)
+                Parameter.CreateParameter("id", vpcId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("vpcs/{id}", parameters, null, Method.Delete);
         }
@@ -57,7 +57,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Vpc> Update(string vpcId, Models.Requests.UpdateVpc updateVpc) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", vpcId)
+                Parameter.CreateParameter("id", vpcId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Vpc>("vpcs/{id}", parameters, updateVpc, "vpc", Method.Put);
         }
@@ -68,7 +68,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<Vpc> PartialUpdate(string vpcId, Models.Requests.UpdateVpc updateVpc) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", vpcId)
+                Parameter.CreateParameter("id", vpcId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Vpc>("vpcs/{id}", parameters, updateVpc, "vpc", Method.Patch);
         }
@@ -79,7 +79,7 @@ namespace DigitalOcean.API.Clients {
         /// </summary>
         public Task<IReadOnlyList<VpcMember>> ListMembers(string vpcId, string resourceType = null) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter ("id", vpcId)
+                Parameter.CreateParameter("id", vpcId, ParameterType.UrlSegment)
             };
             if (!String.IsNullOrEmpty(resourceType)) {
                 parameters.Add(new QueryParameter("resource_type", resourceType));

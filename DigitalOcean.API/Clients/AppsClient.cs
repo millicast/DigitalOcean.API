@@ -22,22 +22,22 @@ namespace DigitalOcean.API.Clients {
 
         public Task<App> RetrieveExistingApp(string appId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("appId", appId)
+                Parameter.CreateParameter("appId", appId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<App>("apps/{appId}", parameters, null, "app");
         }
 
         public Task<IReadOnlyList<Deployment>> ListAppDeployments(string appId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("appId", appId)
+                Parameter.CreateParameter("appId", appId, ParameterType.UrlSegment)
             };
             return _connection.GetPaginated<Deployment>("apps/{appId}/deployments", parameters, "deployments");
         }
 
         public Task<Deployment> RetrieveAppDeployment(string appId, string deploymentId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("appId", appId),
-                new UrlSegmentParameter("deploymentId", deploymentId)
+                Parameter.CreateParameter("appId", appId, ParameterType.UrlSegment),
+                Parameter.CreateParameter("deploymentId", deploymentId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Deployment>("apps/{appId}/deployments/{deploymentId}", parameters, null,
                 "deployment");
@@ -45,7 +45,7 @@ namespace DigitalOcean.API.Clients {
 
         public Task DeleteApp(string appId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("appId", appId)
+                Parameter.CreateParameter("appId", appId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRaw("apps/{appId}", parameters, null, Method.Delete);
         }
@@ -56,7 +56,7 @@ namespace DigitalOcean.API.Clients {
 
         public Task<Deployment> CreateNewDeployment(string appId, ForceBuildApp forceBuild) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("appId", appId)
+                Parameter.CreateParameter("appId", appId, ParameterType.UrlSegment)
             };
 
             return _connection.ExecuteRequest<Deployment>("apps/{appId}/deployments", parameters,
@@ -65,8 +65,8 @@ namespace DigitalOcean.API.Clients {
 
         public Task<Deployment> CancelDeployment(string appId, string deploymentId) {
             var parameters = new List<Parameter> {
-                new UrlSegmentParameter("appId", appId),
-                new UrlSegmentParameter("deploymentId", deploymentId)
+                Parameter.CreateParameter("appId", appId, ParameterType.UrlSegment),
+                Parameter.CreateParameter("deploymentId", deploymentId, ParameterType.UrlSegment)
             };
             return _connection.ExecuteRequest<Deployment>("apps/{appId}/deployments/{deploymentId}", parameters, null,
                 "deployment", Method.Post);
