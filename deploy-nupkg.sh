@@ -13,6 +13,7 @@ shopt -s inherit_errexit
 
 function main() {
   dotnet tool restore
+
   versionJson="$(dotnet dotnet-gitversion /config .gitversion.yml)"
   semVer="$(jq -r '.SemVer' <<< "${versionJson}")"
   assemblySemVer="$(jq -r '.AssemblySemVer' <<< "${versionJson}")"
@@ -21,13 +22,19 @@ function main() {
   dotnet restore
 
   dotnet clean -c Release
-  dotnet build -c Release -p:Version="${assemblySemVer}" -p:InformationalVersion="${informationalVersion}" -p:IncludeSourceRevisionInInformationalVersion=false
 
-  dotnet test -c Release --no-build
+  dotnet build -c Release --no-restore \
+    -p:Version="${assemblySemVer}" \
+    -p:InformationalVersion="${informationalVersion}" \
+    -p:IncludeSourceRevisionInInformationalVersion=false
+
+  dotnet test -c Release --no-restore --no-build
 
   mkdir -p dist/
   rm -f dist/*
-  dotnet pack -c Release -p:PackageVersion="${semVer}" -o dist/ --no-build
+  dotnet pack -c Release --no-restore --no-build \
+    -o dist/ \
+    -p:PackageVersion="${semVer}"
 
   for nupkg in dist/*.nupkg; do
     dotnet nuget push "${nupkg}" --source "${NUPKG_PUBLISH_URL}" --api-key "${NUPKG_PUBLISH_APIKEY}"
