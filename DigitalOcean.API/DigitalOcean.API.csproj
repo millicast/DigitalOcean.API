@@ -5,7 +5,7 @@
     <Authors>vevix</Authors>
     <Description>.NET wrapper of the DigitalOcean API</Description>
     <Copyright>2019</Copyright>
-    <PackageId>DigitalOcean.API</PackageId>
+    <PackageId>DigitalOcean.API.Millicast</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIconUrl>http://i.imgur.com/llqIpX6.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
