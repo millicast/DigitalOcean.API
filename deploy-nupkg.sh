@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -o nounset -o errexit -o pipefail
 shopt -s inherit_errexit
