@@ -4,7 +4,7 @@ set -o nounset -o errexit -o pipefail
 shopt -s inherit_errexit
 
 ### REQUIREMENTS:
-### dotnet-sdk-8.0
+### dotnet-sdk-6.0 or greater
 ### jq
 
 ### SECRETS:
