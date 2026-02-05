@@ -14,7 +14,7 @@ shopt -s inherit_errexit
 function main() {
   dotnet tool restore
 
-  versionJson="$(dotnet dotnet-gitversion /config .gitversion.yml)"
+  versionJson="$(dotnet dotnet-gitversion /nocache /config .gitversion.yml)"
   semVer="$(jq -r '.SemVer' <<< "${versionJson}")"
   assemblySemVer="$(jq -r '.AssemblySemVer' <<< "${versionJson}")"
   informationalVersion="$(jq -r '.InformationalVersion' <<< "${versionJson}")"
